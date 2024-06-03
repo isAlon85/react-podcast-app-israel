@@ -1,24 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import routes from "./routes/routes";
+import NotFoundPage from "./pages/404/NotFoundPage";
 
 function App() {
+
+  const pages = [
+    // Public pages
+    {
+      exact: true,
+      path: routes.home,
+      component: null,
+      layout: null
+    },
+    {
+      exact: true,
+      path: routes.podcastDetail,
+      component: null,
+      layout: null
+    },
+    {
+      exact: true,
+      path: routes.episodeDetail,
+      component: null,
+      layout: null
+    }
+  ]
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path='' element={<Navigate replace to='/'/>}/>
+        { pages.map(
+          ({ exact, path, component: Component, layout: Layout }, index) => (
+            <Route
+              key = { index }
+              exact = { exact }
+              path  ={ path }
+              element = { <Layout main = { <Component/> }/> }
+            />
+          )
+        )}
+        <Route path='*' element={<NotFoundPage/>}/>
+      </Routes>
+    </Router>
   );
 }
 

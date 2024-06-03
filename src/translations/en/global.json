@@ -1,0 +1,14 @@
+{
+  "language": "English",
+  "languages": {
+    "spanish": "Spanish",
+    "english": "English"
+  },
+  "home":{
+    "title": "Podcaster"
+  },
+  "notfound":{
+    "notfound": "404 - Page Not Found",
+    "landing": "Go to home page"
+  }
+}
