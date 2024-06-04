@@ -98,8 +98,8 @@ function HomePage(props) {
       <h3>{t('home.error')}</h3>
       :
       <div className="home-podcast d-flex flex-column justify-content-center align-items-center">
-        <div className="podcast-input-container d-flex flex-row justify-content-center justify-content-lg-end align-items-center">
-          <div className="podcast-input-left d-flex flex-row  justify-content-center justify-content-lg-end align-items-center">
+        <div className="podcast-input-container d-flex flex-row justify-content-center justify-content-md-end align-items-center">
+          <div className="podcast-input-left d-flex flex-row  justify-content-center justify-content-md-end align-items-center">
             <div className="podcast-input-counter d-flex flex-row justify-content-center align-items-center">
               { filteredPodcasts.length }
             </div>
