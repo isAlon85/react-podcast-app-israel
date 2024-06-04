@@ -5,10 +5,12 @@
     "english": "English"
   },
   "home":{
-    "title": "Podcaster"
+    "title": "Podcaster",
+    "author": "Author",
+    "filter": "Filter Podcast"
   },
-  "notfound":{
-    "notfound": "404 - Page Not Found",
-    "landing": "Go to home page"
+  "notFound":{
+    "notFound": "404 - Page Not Found",
+    "landing": "Go to home"
   }
 }

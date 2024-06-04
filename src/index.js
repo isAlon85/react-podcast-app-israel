@@ -9,7 +9,7 @@ import global_es from "./translations/es/global.json";
 import global_en from "./translations/en/global.json";
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css";
-import './index.css';
+import './index.scss';
 <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin></script>
 
 const DETECTION_OPTIONS = {

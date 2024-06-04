@@ -5,10 +5,14 @@
     "english": "Inglés"
   },
   "home":{
-    "title": "Podcaster"
+    "title": "Podcaster",
+    "author": "Autor",
+    "filter": "Filtrar Podcast",
+    "error": "Error",
+    "noResults": "Sin resultados"
   },
-  "notfound":{
-    "notfound": "404 - Página No Encontrada",
+  "notFound":{
+    "notFound": "404 - Página No Encontrada",
     "landing": "Ir a la página principal"
   }
 }
