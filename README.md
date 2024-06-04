@@ -34,4 +34,15 @@ It correctly bundles React in production mode and optimizes the build for the be
 The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+After this, you have to run:
+
+```
+> $ npm install -g serve
+> $ serve -s build
+```
+
+You can run the optimized build in the port that "serve" tells you. It can be either 3000 or another free one if 3000 is busy (example: 52681)
+
+[http://localhost:3000](http://localhost:3000)
+
+[http://localhost:52120](http://localhost:52120)
