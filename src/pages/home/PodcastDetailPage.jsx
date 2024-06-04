@@ -1,14 +1,18 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../App.js";
-import PodcastCard from "../../components/ui/PodcastCard.jsx";
 import { getOnePodcast } from "../../services/axiosService.js";
+import { useParams } from "react-router-dom";
+import PodcastCard from "../../components/ui/PodcastCard.jsx";
 import PodcastLoading from "../../components/ui/PodcastLoading.jsx";
+import PodcastDetail from "../../components/ui/PodcastDetail.jsx";
 
 function PodcastDetailPage(props) {
 
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
+
+  let { podcastId } = useParams();
 
   const { onePodcast, 
     setOnePodcast,
@@ -23,9 +27,9 @@ function PodcastDetailPage(props) {
       if (!onePodcastIsLoading) {
         setOnePoscastIsLoading(true);
         setOnePodcastError(false);
-        await getOnePodcast()
+        await getOnePodcast(podcastId)
         .then((response) => {
-          setOnePodcast(JSON.parse(response.data.contents).feed.entry);
+          setOnePodcast(JSON.parse(response.data.contents)?.results);
         })
         .catch((error) => {
           setOnePodcastError(true);
@@ -38,31 +42,25 @@ function PodcastDetailPage(props) {
   }, []);
 
   return (
-    <section id="home-section" className="home-section d-flex flex-column justify-content-center align-items-center">
+    <section id="podcast-section" className="podcast-section d-flex flex-column justify-content-center align-items-center">
     { onePodcastIsLoading ?
-      <div className="home-podcast d-flex justify-content-center align-items-center">
+      <div className="podcast-detail-container d-flex justify-content-center align-items-center">
         <PodcastLoading/>
         <PodcastLoading/>
       </div>
       :
       onePodcastError ?
-      <h3>Error</h3>
+      <h3>{t('home.error')}</h3>
       :
-      <div className="home-podcast d-flex flex-column justify-content-center align-items-center">
-        <div className="podcast-input-container d-flex flex-row justify-content-center justify-content-md-end align-items-center">
-
-        </div>
-        <div className="cards-container d-flex flex-wrap justify-content-center align-items-start">
-          {
-            !onePodcast.length ? 
-              <h3>Sin resultados</h3>
-              :
-              onePodcast.map((item) => {
-                  return (
-                    <PodcastCard key={ item.id.attributes["im:id"] } podcast={ item }/>
-                  )
-              })
-          }
+      <div className="podcast-detail-container d-flex justify-content-between">
+        <PodcastDetail item = { onePodcast }/>
+        <div className="podcast-detail-container-right d-flex flex-column">
+          <div className="podcast-detail-container-right-top d-flex flex-column justify-content-center align-items-start">
+            {`${t('podcastDetail.episodes')}: ${onePodcast[0]?.trackCount}`}
+          </div>
+          <div className="podcast-detail-container-right-bottom d-flex flex-column justify-content-center align-items-start">
+          
+          </div>
         </div>
       </div>
     

@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../App.js";
-import PodcastCard from "../../components/ui/PodcastCard";
 import { getAllPodcasts } from "../../services/axiosService.js";
+import PodcastCard from "../../components/ui/PodcastCard";
 import PodcastLoading from "../../components/ui/PodcastLoading.jsx";
 
 function HomePage(props) {

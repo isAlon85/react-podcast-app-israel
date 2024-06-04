@@ -11,6 +11,11 @@
     "error": "Error",
     "noResults": "Sin resultados"
   },
+  "podcastDetail":{
+    "by": "Por",
+    "description": "Descripción",
+    "episodes": "Episodios"
+  },
   "notFound":{
     "notFound": "404 - Página No Encontrada",
     "landing": "Ir a la página principal"

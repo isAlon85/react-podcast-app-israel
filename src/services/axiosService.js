@@ -15,9 +15,11 @@ export const getAllPodcasts = () => {
 
 export const getOnePodcast = (podcastId) => {
 
+  var url = `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`;
+
   var config = {
     method: 'get',
-    url: `https://api.allorigins.win/get?url=${encodeURIComponent(`https://itunes.apple.com/lookup?id=9${podcastId}&media=podcast&entity=podcastEpisode&limit=20`)}`
+    url: `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`
   };
 
   return axios(config);
