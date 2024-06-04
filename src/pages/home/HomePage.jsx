@@ -10,13 +10,19 @@ function HomePage(props) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
+  const podcastsData = localStorage.getItem("podcasts") ? JSON.parse(localStorage.getItem("podcasts")) : null;
+
   const { allPodcasts, 
     setAllPodcasts,
-    allPodcastsLastUpdate, 
+    setAllPodcastsLastUpdate, 
     allPodcastsAreLoading, 
     setAllPodcastsAreLoading,
     allPodcastsError,
-    setAllPodcastsError 
+    setAllPodcastsError,
+    setOnePodcast,
+    setOnePodcastLastUpdate,
+    fakeLoading, 
+    setFakeLoading
   } = useContext(AppContext);
 
   const [filteredPodcasts, setFilteredPodcasts] = useState([]);
@@ -44,7 +50,7 @@ function HomePage(props) {
         .finally(() => setAllPodcastsAreLoading(false))
       }
     }
-    if (!allPodcasts.length || allPodcastsLastUpdate + 86400000 < Date.now()) {
+    if (!podcastsData?.data?.length || podcastsData?.timestamp + 86400000 < Date.now()) {
       fetchData();
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -68,9 +74,20 @@ function HomePage(props) {
     }
   }, [searchInput, allPodcasts]);
 
+  useEffect(() => {
+    setOnePodcast([]);
+    setOnePodcastLastUpdate(null);
+    setFakeLoading(true);
+    setAllPodcasts(podcastsData?.data ? podcastsData?.data : []);
+    setAllPodcastsLastUpdate(podcastsData?.timestamp ? podcastsData?.timestamp : null);
+    setTimeout(() => {
+      setFakeLoading(false);
+    }, 500);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   return (
     <section id="home-section" className="home-section d-flex flex-column justify-content-center align-items-center">
-    { allPodcastsAreLoading ?
+    { allPodcastsAreLoading || fakeLoading ?
       <div className="home-podcast cards-container d-flex flex-wrap justify-content-center align-items-center">
         <PodcastLoading/>
         <PodcastLoading/>
@@ -98,14 +115,14 @@ function HomePage(props) {
         </div>
         <div className="cards-container d-flex flex-wrap justify-content-center align-items-start">
           {
-            !filteredPodcasts.length ? 
-              <h3>{t('home.noResults')}</h3>
-              :
-              filteredPodcasts.map((item) => {
-                  return (
-                    <PodcastCard key={ item.id.attributes["im:id"] } podcast={ item }/>
-                  )
-              })
+            !filteredPodcasts.length && searchInput ? 
+            <h3>{t('home.noResults')}</h3>
+            :
+            filteredPodcasts.map((item) => {
+                return (
+                  <PodcastCard key={ item.id.attributes["im:id"] } podcast={ item }/>
+                )
+            })
           }
         </div>
       </div>

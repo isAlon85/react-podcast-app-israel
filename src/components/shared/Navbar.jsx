@@ -15,9 +15,10 @@ export default function Navbar() {
   const {  
     allPodcastsAreLoading, 
     onePodcastIsLoading, 
+    fakeLoading
   } = useContext(AppContext);
 
-  const [spinner, setSpinner] = useState(true);
+  const [spinner, setSpinner] = useState(false);
 
   const handleToHome = () => {
     navigate(routes.home);
@@ -25,12 +26,10 @@ export default function Navbar() {
 
   useEffect(() => {
     setSpinner(true);
-    if (!allPodcastsAreLoading && !onePodcastIsLoading) {
-      setTimeout(() => {
-        setSpinner(false);
-      }, 500);
+    if (!allPodcastsAreLoading && !onePodcastIsLoading && !fakeLoading) {
+      setSpinner(false);
     }
-  }, [location, allPodcastsAreLoading, onePodcastIsLoading])
+  }, [location, allPodcastsAreLoading, onePodcastIsLoading, fakeLoading])
   
   return (
     <header id="navbar-section" className="navbar-container d-flex flex-column justify-content-center align-items-between">

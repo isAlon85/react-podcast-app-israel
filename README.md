@@ -8,7 +8,13 @@ This webpage is a SPA (Single Page Application) as the requirement says.
 
 You need the lastest version of Node and NPM. Also GIT installed in your computer.
 
-You need to create a .env file to be able to run the app. Below are the instructions.
+You need to clone this repository and install dependencies:
+
+```
+> $ git clone https://github.com/isAlon85/react-podcast-app-israel.git
+> $ cd react-podcast-app-israel
+> $ npm install or yarn install
+```
 
 In the project directory, you can run:
 
@@ -29,5 +35,3 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## .env file

@@ -29,7 +29,9 @@ function PodcastDetailPage(props) {
     onePodcastIsLoading, 
     setOnePoscastIsLoading,
     onePodcastError, 
-    setOnePodcastError 
+    setOnePodcastError,
+    fakeLoading,
+    setFakeLoading
   } = useContext(AppContext);
 
   useEffect(() => {
@@ -55,13 +57,21 @@ function PodcastDetailPage(props) {
   }, [onePodcastLastUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    setFakeLoading(true);
     setEpisode(episodeId && location?.state?.item ? true : false);
-  }, [location, episodeId]);
+    setTimeout(() => {
+      setFakeLoading(false);
+    }, 500);
+  }, [location, episodeId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
+    setFakeLoading(true);
     setOnePodcastError(false);
     setOnePodcast(onePodcastData?.data ? onePodcastData?.data : []);
     setOnePodcastLastUpdate(onePodcastData?.timestamp ? onePodcastData?.timestamp : false);
+    setTimeout(() => {
+      setFakeLoading(false);
+    }, 500);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -70,7 +80,7 @@ function PodcastDetailPage(props) {
       <h3>{t('home.error')}</h3>
       :
       <div className="podcast-detail-container d-flex flex-column flex-lg-row justify-content-between align-items-center align-items-lg-start">
-        { onePodcastIsLoading ?
+        { onePodcastIsLoading || fakeLoading ?
           <PodcastDetailLoading/>
           :
           <PodcastDetail 
@@ -79,36 +89,32 @@ function PodcastDetailPage(props) {
           />
         }
         <div className="podcast-detail-container-right d-flex flex-column">
-        { episode ? 
+        { onePodcastIsLoading || fakeLoading ?
+          <>
+            <PodcastDetailCounterLoading/>
+            <PodcastDetailCounterLoading/>
+          </>
+          :
+          episode ? 
           <PodcastDetailEpisode item = { location?.state?.item }/>
           :
           <>
-            
-            { onePodcastIsLoading ?
-              <>
-                <PodcastDetailCounterLoading/>
-                <PodcastDetailCounterLoading/>
-              </>
-              :
-              <>
-                <PodcastDetailCounter item = { onePodcast }/>
-                <div className="podcast-detail-container-right-bottom d-flex flex-column justify-content-center align-items-start">
-                  <div className="podcast-detail-container-right-bottom-title d-flex justify-content-between align-items-center">
-                      <h6>{t('podcastDetail.title')}</h6>
-                      <div className="podcast-detail-container-right-bottom-title-end d-flex justify-content-end align-items-center">
-                        <h6>{t('podcastDetail.date')}</h6>
-                        <h6>{t('podcastDetail.duration')}</h6>
-                      </div>
-                    </div>
-                    { onePodcast.map((item, index) => {
-                        if (index) {
-                          return <PodcastDetailRow key={ item?.trackId } item={ item }/>
-                        } else return null
-                        })
-                    }
+            <PodcastDetailCounter item = { onePodcast }/>
+            <div className="podcast-detail-container-right-bottom d-flex flex-column justify-content-center align-items-start">
+              <div className="podcast-detail-container-right-bottom-title d-flex justify-content-between align-items-center">
+                  <h6>{t('podcastDetail.title')}</h6>
+                  <div className="podcast-detail-container-right-bottom-title-end d-flex justify-content-end align-items-center">
+                    <h6>{t('podcastDetail.date')}</h6>
+                    <h6>{t('podcastDetail.duration')}</h6>
+                  </div>
                 </div>
-              </>
-            }
+                { onePodcast.map((item, index) => {
+                    if (index) {
+                      return <PodcastDetailRow key={ item?.trackId } item={ item }/>
+                    } else return null
+                    })
+                }
+            </div>
           </>
         }
         </div>

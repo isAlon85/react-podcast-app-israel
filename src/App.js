@@ -9,16 +9,15 @@ export const AppContext = createContext();
 
 function App() {
 
-  const podcastsData = localStorage.getItem("podcasts") ? JSON.parse(localStorage.getItem("podcasts")) : null;
-
-  const [allPodcasts, setAllPodcasts] = useState(podcastsData?.data ? podcastsData?.data : []);
-  const [allPodcastsLastUpdate, setAllPodcastsLastUpdate] = useState(podcastsData?.timestamp ? podcastsData?.timestamp : null);
+  const [allPodcasts, setAllPodcasts] = useState([]);
+  const [allPodcastsLastUpdate, setAllPodcastsLastUpdate] = useState(null);
   const [allPodcastsAreLoading, setAllPodcastsAreLoading] = useState(false);
   const [allPodcastsError, setAllPodcastsError] = useState(false);
   const [onePodcast, setOnePodcast] = useState([]);
   const [onePodcastLastUpdate, setOnePodcastLastUpdate] = useState(null);
   const [onePodcastIsLoading, setOnePoscastIsLoading] = useState(false);
   const [onePodcastError, setOnePodcastError] = useState(false);
+  const [fakeLoading, setFakeLoading] = useState(false);
 
   return (
     <AppContext.Provider
@@ -38,7 +37,9 @@ function App() {
         onePodcastIsLoading, 
         setOnePoscastIsLoading,
         onePodcastError, 
-        setOnePodcastError
+        setOnePodcastError,
+        fakeLoading, 
+        setFakeLoading
       }
     }>
       <Router>
