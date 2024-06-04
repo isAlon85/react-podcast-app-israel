@@ -14,7 +14,11 @@
   "podcastDetail":{
     "by": "Por",
     "description": "Descripción",
-    "episodes": "Episodios"
+    "episodes": "Episodios",
+    "title": "Título",
+    "date": "Fecha",
+    "duration": "Duración",
+    "audioFallback": "Tu navegador no soporta el elemento audio"
   },
   "notFound":{
     "notFound": "404 - Página No Encontrada",

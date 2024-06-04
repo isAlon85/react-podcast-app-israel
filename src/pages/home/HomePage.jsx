@@ -12,6 +12,7 @@ function HomePage(props) {
 
   const { allPodcasts, 
     setAllPodcasts,
+    allPodcastsLastUpdate, 
     allPodcastsAreLoading, 
     setAllPodcastsAreLoading,
     allPodcastsError,
@@ -34,6 +35,7 @@ function HomePage(props) {
         await getAllPodcasts()
         .then((response) => {
           setAllPodcasts(JSON.parse(response.data.contents).feed.entry);
+          sessionStorage.setItem("podcasts", JSON.stringify({ timestamp: Date.now(), data: JSON.parse(response.data.contents).feed.entry }));
         })
         .catch((error) => {
           setAllPodcastsError(true);
@@ -42,8 +44,10 @@ function HomePage(props) {
         .finally(() => setAllPodcastsAreLoading(false))
       }
     }
-    fetchData();
-  }, []);
+    if (!allPodcasts.length || allPodcastsLastUpdate + 86400000 < Date.now()) {
+      fetchData();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (searchInput !== "") {
@@ -70,14 +74,15 @@ function HomePage(props) {
       <div className="home-podcast d-flex justify-content-center align-items-center">
         <PodcastLoading/>
         <PodcastLoading/>
+        <PodcastLoading/>
       </div>
       :
       allPodcastsError ?
       <h3>{t('home.error')}</h3>
       :
       <div className="home-podcast d-flex flex-column justify-content-center align-items-center">
-        <div className="podcast-input-container d-flex flex-row justify-content-center justify-content-md-end align-items-center">
-          <div className="podcast-input-left d-flex flex-row  justify-content-center justify-content-md-end align-items-center">
+        <div className="podcast-input-container d-flex flex-row justify-content-center justify-content-lg-end align-items-center">
+          <div className="podcast-input-left d-flex flex-row  justify-content-center justify-content-lg-end align-items-center">
             <div className="podcast-input-counter d-flex flex-row justify-content-center align-items-center">
               { filteredPodcasts.length }
             </div>

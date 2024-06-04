@@ -2,20 +2,30 @@ import React, { useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { AppContext } from "../../App.js";
 import { getOnePodcast } from "../../services/axiosService.js";
-import { useParams } from "react-router-dom";
-import PodcastCard from "../../components/ui/PodcastCard.jsx";
-import PodcastLoading from "../../components/ui/PodcastLoading.jsx";
+import { useParams, useLocation } from "react-router-dom";
 import PodcastDetail from "../../components/ui/PodcastDetail.jsx";
+import PodcastDetailRow from "../../components/ui/PodcastDetailRow.jsx";
+import PodcastDetailLoading from "../../components/ui/PodcastDetailLoading.jsx";
+import PodcastDetailCounter from "../../components/ui/PodcastDetailCounter.jsx";
+import PodcastDetailCounterLoading from "../../components/ui/PodcastDetailCounterLoading.jsx";
+import PodcastDetailEpisode from "../../components/ui/PodcastDetailEpisode.jsx";
 
 function PodcastDetailPage(props) {
 
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
-  let { podcastId } = useParams();
+  let { podcastId, episodeId } = useParams();
+  const location = useLocation();
+
+  const onePodcastData = sessionStorage.getItem(podcastId) ? JSON.parse(sessionStorage.getItem(podcastId)) : null;
+
+  const [episode, setEpisode] = useState(episodeId && location?.state?.item ? true : false);
 
   const { onePodcast, 
     setOnePodcast,
+    onePodcastLastUpdate, 
+    setOnePodcastLastUpdate,
     onePodcastIsLoading, 
     setOnePoscastIsLoading,
     onePodcastError, 
@@ -30,6 +40,7 @@ function PodcastDetailPage(props) {
         await getOnePodcast(podcastId)
         .then((response) => {
           setOnePodcast(JSON.parse(response.data.contents)?.results);
+          sessionStorage.setItem(podcastId, JSON.stringify({ timestamp: Date.now(), data: JSON.parse(response.data.contents)?.results }));
         })
         .catch((error) => {
           setOnePodcastError(true);
@@ -38,29 +49,69 @@ function PodcastDetailPage(props) {
         .finally(() => setOnePoscastIsLoading(false))
       }
     }
-    fetchData();
-  }, []);
+    if (onePodcastLastUpdate !== null && (!onePodcast.length || onePodcastLastUpdate + 86400000 < Date.now())) {
+      console.log(onePodcastLastUpdate)
+      fetchData();
+    }
+  }, [onePodcastLastUpdate]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    setEpisode(episodeId && location?.state?.item ? true : false);
+  }, [location, episodeId]);
+
+  useEffect(() => {
+    setOnePodcastError(false);
+    setOnePodcast(onePodcastData?.data ? onePodcastData?.data : []);
+    setOnePodcastLastUpdate(onePodcastData?.timestamp ? onePodcastData?.timestamp : false);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <section id="podcast-section" className="podcast-section d-flex flex-column justify-content-center align-items-center">
-    { onePodcastIsLoading ?
-      <div className="podcast-detail-container d-flex justify-content-center align-items-center">
-        <PodcastLoading/>
-        <PodcastLoading/>
-      </div>
-      :
-      onePodcastError ?
+    { onePodcastError ?
       <h3>{t('home.error')}</h3>
       :
-      <div className="podcast-detail-container d-flex justify-content-between">
-        <PodcastDetail item = { onePodcast }/>
+      <div className="podcast-detail-container d-flex flex-column flex-lg-row justify-content-between align-items-center align-items-lg-start">
+        { onePodcastIsLoading ?
+          <PodcastDetailLoading/>
+          :
+          <PodcastDetail 
+            item = { onePodcast } 
+            setEpisode = { setEpisode }
+          />
+        }
         <div className="podcast-detail-container-right d-flex flex-column">
-          <div className="podcast-detail-container-right-top d-flex flex-column justify-content-center align-items-start">
-            {`${t('podcastDetail.episodes')}: ${onePodcast[0]?.trackCount}`}
-          </div>
-          <div className="podcast-detail-container-right-bottom d-flex flex-column justify-content-center align-items-start">
-          
-          </div>
+        { episode ? 
+          <PodcastDetailEpisode item = { location?.state?.item }/>
+          :
+          <>
+            
+            { onePodcastIsLoading ?
+              <>
+                <PodcastDetailCounterLoading/>
+                <PodcastDetailCounterLoading/>
+              </>
+              :
+              <>
+                <PodcastDetailCounter item = { onePodcast }/>
+                <div className="podcast-detail-container-right-bottom d-flex flex-column justify-content-center align-items-start">
+                  <div className="podcast-detail-container-right-bottom-title d-flex justify-content-between align-items-center">
+                      <h6>{t('podcastDetail.title')}</h6>
+                      <div className="podcast-detail-container-right-bottom-title-end d-flex justify-content-end align-items-center">
+                        <h6>{t('podcastDetail.date')}</h6>
+                        <h6>{t('podcastDetail.duration')}</h6>
+                      </div>
+                    </div>
+                    { onePodcast.map((item, index) => {
+                        if (index) {
+                          return <PodcastDetailRow key={ item?.trackId } item={ item }/>
+                        } else return null
+                        })
+                    }
+                </div>
+              </>
+            }
+          </>
+        }
         </div>
       </div>
     

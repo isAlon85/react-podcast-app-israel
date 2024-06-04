@@ -1,7 +1,5 @@
 import axios from 'axios';
 
-const DOMAIN = process.env.REACT_APP_BACKEND_DOMAIN;
-
 export const getAllPodcasts = () => {
 
   var config = {
@@ -13,9 +11,11 @@ export const getAllPodcasts = () => {
 
 }
 
-export const getOnePodcast = (podcastId) => {
+export const getOnePodcast = (podcastId, limit) => {
+  
+  if (!limit) limit = 20;
 
-  var url = `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=20`;
+  var url = `https://itunes.apple.com/lookup?id=${podcastId}&media=podcast&entity=podcastEpisode&limit=${limit}`;
 
   var config = {
     method: 'get',

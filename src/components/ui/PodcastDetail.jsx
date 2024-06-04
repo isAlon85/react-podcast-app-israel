@@ -2,15 +2,20 @@ import React from 'react';
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
-export default function PodcastDetail({ item }) {
+export default function PodcastDetail({ item, setEpisode }) {
 
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
   const navigate = useNavigate();
 
+  const handleNavigate = () => {
+    navigate(`/podcast/${item[0]?.collectionId}`, { state: { item: null } });
+    setEpisode(false);
+  }
+
   return (
-    <div onClick={ () => navigate(`/podcast/${item[0]?.collectionId}`) }
+    <div onClick={ handleNavigate }
       className={`detail-card-item as-a-button d-flex flex-column justify-content-center align-items-center`}
     >
       <img src={ item[0]?.artworkUrl600 } alt={`card-item-`} className=""/>

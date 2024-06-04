@@ -20,7 +20,7 @@ import routes from "./routes/routes";
   {
     exact: true,
     path: routes.episodeDetail,
-    component: HomePage,
+    component: PodcastDetailPage,
     layout: DashboardLayout
   }
 ]

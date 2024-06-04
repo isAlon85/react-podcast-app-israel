@@ -198,7 +198,6 @@
   }
 }
 
-
 @media (max-width: $mediaLG) {
 
   .cards-container {
@@ -297,6 +296,71 @@
   line-height: 120%;
 }
 
+.podcast-detail-container-right-top-loading {
+  width: 100%;
+  height: 50px;
+}
+
+.podcast-detail-container-right-bottom {
+  padding-top: $dimenM;
+  .podcast-detail-container-right-bottom-title {
+    padding: $dimenXS;
+    width: 100%;
+    gap: $dimenXS;
+    .podcast-detail-container-right-bottom-title-end {
+      gap: $dimenXS;
+      h6:nth-child(1) {
+        width: 76px;
+      }
+      h6:nth-child(2) {
+        width: 60px;
+      }
+    }
+  }
+  h6 {
+    margin: 0rem;
+    color: $black;
+    font-size: 14px;
+    font-family: $font1;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+  }
+}
+
+.duration-loading {
+  width: 60px;
+  height: 16px;
+}
+
+.episode-row {
+  border-top: 1px solid rgba($black, 0.6);
+  h6 {
+    margin: 0rem;
+    color: $black;
+    font-size: 14px;
+    font-family: $font1;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+  }
+  > h6 {
+    margin: 0rem;
+    width: 100%;
+    max-width: calc(100% - 260px);
+    background-color: transparent;
+    color: $blue;
+    cursor: pointer;
+    white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+.episode-row:nth-child(even) {
+  background-color: $grey-table;
+}
+
 .detail-card-item {
   margin: 0rem;
   padding: $dimenXL $dimenM;
@@ -308,6 +372,7 @@
   background: $blueBackground;
   gap: $dimenS;
   cursor: pointer;
+  flex-shrink: 0;
   hr {
     margin: 0rem 0rem;
     width: 100%;
@@ -341,6 +406,7 @@
       line-height: 120%;
     }
   }
+
   .detail-card-item-description {
     width: 100%;
     h3 {
@@ -364,36 +430,86 @@
   }
 }
 
-.card-item:hover > img {
-  transform: translateY(-6px);
-}
-
-.skeleton {
-  animation: skeleton-loading 1s linear infinite alternate;
-  opacity: 0.8;
-}
-
-.card-item-loading {
-  margin: $dimenXXXL;
-  div:nth-child(1) {
-    position: absolute;
-    top: -60px;
-    left: calc(50% - 60px);
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
+.detail-card-item-loading {
+  > div:nth-child(1) {
+    width: 180px;
+    height: 180px;
     box-shadow: 4px 4px 30px rgba(213, 213, 213, 0.25);
   }
-  div:nth-child(2) {
+  .detail-card-item-name, .detail-card-item-description {
+    gap: $dimenXXS;
+    div {
+      width: 100%;
+      height: 18px;
+    }
+  }
+}
+
+.podcast-episode {
+  margin: 0rem;
+  padding: $dimenXL $dimenM;
+  width: 100%;
+  border: 1px solid rgba(213, 213, 213, 0.25);
+  border-radius: $border2;
+  box-shadow: 0px 10px 30px rgba(213, 213, 213, 0.25);
+  background: $blueBackground;
+  gap: $dimenS;
+  h3 {
+    margin: 0rem;
+    color: $black;
+    font-size: 18px;
+    font-family: $font1;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120%;
+  }
+  p {
     margin: 0rem;
     width: 100%;
-    height: 20px;
+    white-space: pre-wrap;
+    color: $black;
+    font-size: 14px;
+    font-family: $font1;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 120%;
   }
-  div:nth-child(3) {
-    margin: 0rem;
+  audio {
     width: 100%;
-    height: 15px;
   }
+}
+
+@media (max-width: $mediaLG) {
+
+  .podcast-detail-container {
+    gap: $dimenM;
+  }
+
+  .episode-row {
+    > h6 {
+      max-width: calc(100% - 20px);
+    }
+  }
+
+}
+
+@media (max-width: $mediaXS) {
+
+  .podcast-detail-container-right-bottom {
+    .podcast-detail-container-right-bottom-title {
+      .podcast-detail-container-right-bottom-title-end {
+        h6:nth-child(2) {
+          display: none !important;
+        }
+      }
+    }
+
+  }
+
+  .duration-loading {
+    display: none !important;
+  }
+
 }
 
 //404 PAGE
