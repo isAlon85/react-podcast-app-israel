@@ -35,7 +35,7 @@ function HomePage(props) {
         await getAllPodcasts()
         .then((response) => {
           setAllPodcasts(JSON.parse(response.data.contents).feed.entry);
-          sessionStorage.setItem("podcasts", JSON.stringify({ timestamp: Date.now(), data: JSON.parse(response.data.contents).feed.entry }));
+          localStorage.setItem("podcasts", JSON.stringify({ timestamp: Date.now(), data: JSON.parse(response.data.contents).feed.entry }));
         })
         .catch((error) => {
           setAllPodcastsError(true);
@@ -71,7 +71,7 @@ function HomePage(props) {
   return (
     <section id="home-section" className="home-section d-flex flex-column justify-content-center align-items-center">
     { allPodcastsAreLoading ?
-      <div className="home-podcast d-flex justify-content-center align-items-center">
+      <div className="home-podcast cards-container d-flex flex-wrap justify-content-center align-items-center">
         <PodcastLoading/>
         <PodcastLoading/>
         <PodcastLoading/>

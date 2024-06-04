@@ -6,8 +6,6 @@ export default function PodcastDetailEpisode({ item }) {
   // eslint-disable-next-line
   const [t, i18n] = useTranslation("global");
 
-  console.log(item?.episodeUrl)
-
   return (
     <div className="podcast-episode d-flex flex-column justify-content-center align-items-start">
       <h3>{`${item?.trackName}`}</h3>

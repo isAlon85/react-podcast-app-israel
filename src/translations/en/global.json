@@ -7,7 +7,18 @@
   "home":{
     "title": "Podcaster",
     "author": "Author",
-    "filter": "Filter Podcast"
+    "filter": "Filter Podcast",
+    "error": "Error",
+    "noResults": "No results"
+  },
+  "podcastDetail":{
+    "by": "By",
+    "description": "Description",
+    "episodes": "Episodes",
+    "title": "Title",
+    "date": "Date",
+    "duration": "Duration",
+    "audioFallback": "Your browser doesn't support audio files"
   },
   "notFound":{
     "notFound": "404 - Page Not Found",

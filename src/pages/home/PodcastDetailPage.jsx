@@ -18,7 +18,7 @@ function PodcastDetailPage(props) {
   let { podcastId, episodeId } = useParams();
   const location = useLocation();
 
-  const onePodcastData = sessionStorage.getItem(podcastId) ? JSON.parse(sessionStorage.getItem(podcastId)) : null;
+  const onePodcastData = localStorage.getItem(podcastId) ? JSON.parse(localStorage.getItem(podcastId)) : null;
 
   const [episode, setEpisode] = useState(episodeId && location?.state?.item ? true : false);
 
@@ -40,7 +40,7 @@ function PodcastDetailPage(props) {
         await getOnePodcast(podcastId)
         .then((response) => {
           setOnePodcast(JSON.parse(response.data.contents)?.results);
-          sessionStorage.setItem(podcastId, JSON.stringify({ timestamp: Date.now(), data: JSON.parse(response.data.contents)?.results }));
+          localStorage.setItem(podcastId, JSON.stringify({ timestamp: Date.now(), data: JSON.parse(response.data.contents)?.results }));
         })
         .catch((error) => {
           setOnePodcastError(true);
@@ -50,7 +50,6 @@ function PodcastDetailPage(props) {
       }
     }
     if (onePodcastLastUpdate !== null && (!onePodcast.length || onePodcastLastUpdate + 86400000 < Date.now())) {
-      console.log(onePodcastLastUpdate)
       fetchData();
     }
   }, [onePodcastLastUpdate]); // eslint-disable-line react-hooks/exhaustive-deps

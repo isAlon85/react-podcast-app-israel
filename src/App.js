@@ -9,7 +9,7 @@ export const AppContext = createContext();
 
 function App() {
 
-  const podcastsData = sessionStorage.getItem("podcasts") ? JSON.parse(sessionStorage.getItem("podcasts")) : null;
+  const podcastsData = localStorage.getItem("podcasts") ? JSON.parse(localStorage.getItem("podcasts")) : null;
 
   const [allPodcasts, setAllPodcasts] = useState(podcastsData?.data ? podcastsData?.data : []);
   const [allPodcastsLastUpdate, setAllPodcastsLastUpdate] = useState(podcastsData?.timestamp ? podcastsData?.timestamp : null);

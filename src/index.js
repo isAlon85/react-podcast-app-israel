@@ -13,7 +13,7 @@ import './index.scss';
 <script src="https://unpkg.com/react-bootstrap@next/dist/react-bootstrap.min.js" crossOrigin></script>
 
 const DETECTION_OPTIONS = {
-  order: ['querystring', 'cookie', 'localStorage', 'sessionStorage', 'navigator', 'htmlTag'],
+  order: ['querystring', 'cookie', 'localStorage', 'localStorage', 'navigator', 'htmlTag'],
 };
 
 const languages = ["en", "es"];
