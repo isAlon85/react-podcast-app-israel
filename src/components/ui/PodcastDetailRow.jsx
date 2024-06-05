@@ -18,14 +18,14 @@ export default function PodcastDetailRow({ item }) {
     return `${minutes}:${('0' + remainingSeconds).slice(-2)}`;
   }
 
-  useEffect(() => {
+  /*useEffect(() => {
     var audio = new Audio();
     audio.src = item?.episodeUrl;
   
     audio.addEventListener('loadedmetadata', function() {
       setAudioDuration(secondsToMinutesAndSeconds(audio.duration));
     });
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps*/
   
   return (
     <div className="podcast-detail-container-right-bottom-title episode-row d-flex justify-content-between align-items-center">
@@ -34,11 +34,12 @@ export default function PodcastDetailRow({ item }) {
       </h6>
       <div className="podcast-detail-container-right-bottom-title-end d-flex justify-content-end align-items-center">
         <h6>{ item?.releaseDate?.split('T')[0] }</h6>
-        { audioDuration ? 
+        {/* audioDuration ? 
           <h6>{ audioDuration }</h6>
           :
           <div className="duration-loading skeleton"></div>
-        }
+        */}
+        <h6>{ "N/A" }</h6>
       </div>
     </div>
   )
