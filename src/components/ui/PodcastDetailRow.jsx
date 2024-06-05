@@ -39,7 +39,7 @@ export default function PodcastDetailRow({ item }) {
           :
           <div className="duration-loading skeleton"></div>
         */}
-        <h6>{ "N/A" }</h6>
+        <h6>{ secondsToMinutesAndSeconds(item?.trackTimeMillis/1000) }</h6>
       </div>
     </div>
   )
