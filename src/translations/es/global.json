@@ -8,7 +8,7 @@
     "title": "Podcaster",
     "author": "Autor",
     "filter": "Filtrar Podcast",
-    "error": "Error",
+    "error": "Ha habido un error, por favor, recargue la página",
     "noResults": "Sin resultados"
   },
   "podcastDetail":{

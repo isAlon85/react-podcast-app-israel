@@ -8,7 +8,7 @@
     "title": "Podcaster",
     "author": "Author",
     "filter": "Filter Podcast",
-    "error": "Error",
+    "error": "There was an error, reload this page, please",
     "noResults": "No results"
   },
   "podcastDetail":{
